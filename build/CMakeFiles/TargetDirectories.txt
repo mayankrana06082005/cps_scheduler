@@ -1,0 +1,3 @@
+/home/mayank/Desktop/cps_scheduler/build/CMakeFiles/simulator.dir
+/home/mayank/Desktop/cps_scheduler/build/CMakeFiles/edit_cache.dir
+/home/mayank/Desktop/cps_scheduler/build/CMakeFiles/rebuild_cache.dir
