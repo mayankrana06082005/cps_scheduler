@@ -11,8 +11,9 @@ Rather than executing live workloads, this engine mathematically models CPU cont
 
 ## Distributed Split-AI Pipeline Topology
 
-The simulator executes a 12-node hardware topology, mapping Edge Sensors to Gateway ML accelerators based on a Split-Computing architecture.
-![Distributed Split-AI Pipeline Topology](docs/Screenshot from 2026-06-02 18-15-11.png)
+The simulator executes a 12-node hardware topology, mapping Edge Sensors to Gateway ML accelerators based on a Split-Computing architecture
+
+![Distributed Split-AI Pipeline Topology](docs/network_architecture.png)
 
 ---
 
