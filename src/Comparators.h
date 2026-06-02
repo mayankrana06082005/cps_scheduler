@@ -1,14 +1,7 @@
 #pragma once
 #include "Models.h"
 
-/*
-    THE ALGORITHM BRAIN
-    std::priority_queue in C++ outputs the "largest" element first.
-    Because we want the "smallest" value (e.g., shortest period) to be the highest priority,
-    our comparators must return TRUE if left > right.
-*/
-
-// G4: Rate Monotonic Scheduling (RMS)
+// Rate Monotonic Scheduling (RMS)
 // Static priority based entirely on the task's period.
 struct RmsComparator {
     bool operator()(const JobPtr& a, const JobPtr& b) const {
@@ -20,7 +13,7 @@ struct RmsComparator {
     }
 };
 
-// G5: Earliest Deadline First (EDF)
+// Earliest Deadline First (EDF)
 // Dynamic priority based on which job's absolute deadline is closest.
 struct EdfComparator {
     bool operator()(const JobPtr& a, const JobPtr& b) const {
@@ -32,7 +25,7 @@ struct EdfComparator {
     }
 };
 
-// Tier 4 Extension (G11): Least Laxity First (LLF)
+// Least Laxity First (LLF)
 // Laxity = Time until deadline - Time needed to finish.
 // Notice we don't need the current clock time! 
 // (Deadline - CurrentTime) - RemainingTime <=> Deadline - RemainingTime.

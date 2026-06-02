@@ -1,0 +1,10 @@
+build/
+*.o
+simulator
+CMakeCache.txt
+CMakeFiles/
+Makefile
+cmake_install.cmake
+__pycache__/
+*.pyc
+*.csv

@@ -1,38 +1,54 @@
 #pragma once
 #include <string>
 #include <memory>
+#include <vector>
 
-// G1: Task Type definition
 enum class TaskType { SENSOR, CONTROL, ACTUATOR };
-
-// G2: Job Lifecycle States
-// Notice the BLOCKED state is already here in preparation for Tier 4 (Distributed computing)
 enum class JobState { WAITING, READY, RUNNING, BLOCKED, COMPLETED, MISSED };
 
-// G1: The Task Model
-// A Task is a TEMPLATE. It doesn't execute; it generates Jobs.
 struct Task {
     int id;
+    int node_id;           
     int period;
-    int wcet;              // Worst-Case Execution Time
+    int wcet;              
     int relative_deadline;
     TaskType type;
+    
+    int num_predecessors;              
+    std::vector<int> successor_ids;    
+    
+    int memory_required; 
 };
 
-// G2: The Job Lifecycle
-// A Job is a specific INSTANCE of a Task that runs in a specific time window.
 struct Job {
-    int id;                 // Unique ID for this specific job
-    int task_id;            // Which task generated this job?
-    int release_time;       // When does this job become READY?
-    int absolute_deadline;  // release_time + task.relative_deadline
-    int remaining_time;     // Starts at WCET, counts down to 0
+    int id;                 
+    int task_id;            
+    int node_id;            
+    int release_time;       
+    int absolute_deadline;  
+    int remaining_time;     
     JobState state;
     
-    // We store the parent's period here so RMS can quickly access it 
-    // without needing to look up the original Task object every time.
     int parent_period;      
+    int pending_dependencies; 
+    int last_start_time;  
+    
+    int memory_required; 
+    bool memory_allocated; 
 };
 
-// We use shared_ptr so we can pass jobs between queues without copying the data
+struct NetworkMessage {
+    int source_node;
+    int dest_node;
+    int dest_task_id;
+    int arrival_time;  
+};
+
+struct GanttRecord {
+    int node_id;
+    int task_id;
+    int start_time;
+    int end_time;
+};
+
 using JobPtr = std::shared_ptr<Job>;
