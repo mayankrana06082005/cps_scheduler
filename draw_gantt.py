@@ -13,10 +13,8 @@ def draw_chart(filepath, output_filename, title):
         print(f"Trace file {filepath} is empty.")
         return
 
-    # Setup the plot
     fig, ax = plt.subplots(figsize=(16, 10))
 
-    # Create a color map for the tasks
     tasks = sorted(df['Task'].unique())
     colors = plt.cm.get_cmap('tab20', max(tasks) + 1)
     task_colors = {task: colors(task) for task in tasks}
@@ -36,22 +34,19 @@ def draw_chart(filepath, output_filename, title):
     ax.set_xlabel('Time (milliseconds)', fontsize=12)
     ax.set_title(title, fontsize=16)
 
-    # Create a clean Legend
+    # Create a Legend
     handles = [mpatches.Patch(color=task_colors[t], label=f'Task {t}') for t in tasks]
     ax.legend(handles=handles, bbox_to_anchor=(1.02, 1), loc='upper left', ncol=2, title="Task Legend")
 
-    # Save and show
     plt.grid(axis='x', linestyle='--', alpha=0.7)
     plt.tight_layout()
     plt.savefig(output_filename, dpi=300)
-    plt.close() # Close the figure so the next chart starts fresh
+    plt.close() 
     print(f"Success! Gantt chart exported as {output_filename}")
 
 if __name__ == "__main__":
     print("--- D-RTSS: Generating Gantt Charts ---")
     
-    # Generate the chart for Rate Monotonic Scheduling
     draw_chart("build/trace_rms.csv", "gantt_chart_rms.png", "Distributed AI Pipeline: RMS Policy")
     
-    # Generate the chart for Earliest Deadline First
     draw_chart("build/trace_edf.csv", "gantt_chart_edf.png", "Distributed AI Pipeline: EDF Policy")

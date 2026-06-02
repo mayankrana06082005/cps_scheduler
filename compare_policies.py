@@ -18,8 +18,6 @@ def run_comparative_monte_carlo(num_runs=100):
         # Execute the compiled C++ simulator
         result = subprocess.run(['./build/simulator'], capture_output=True, text=True)
         
-        # We expect exactly TWO instances of "Missed: [number]" in the output
-        # Index 0 is RMS, Index 1 is EDF (because of the order in main.cpp)
         matches = re.findall(r'Missed:\s+(\d+)', result.stdout)
         
         if len(matches) >= 2:
@@ -38,11 +36,9 @@ def run_comparative_monte_carlo(num_runs=100):
     print(f"RMS Failure Probability: {(rms_failures/num_runs)*100:.1f}%")
     print(f"EDF Failure Probability: {(edf_failures/num_runs)*100:.1f}%\n")
     
-    # --- Generate the Side-by-Side Histogram ---
+    # create Histogram
     rms_counts = Counter(rms_misses)
     edf_counts = Counter(edf_misses)
-    
-    # Get the maximum number of misses to size the X-axis
     max_misses = max(max(rms_misses), max(edf_misses), 1)
     x_indices = np.arange(max_misses + 1)
     
