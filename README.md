@@ -12,33 +12,7 @@ Rather than executing live workloads, this engine mathematically models CPU cont
 ## Distributed Split-AI Pipeline Topology
 
 The simulator executes a 12-node hardware topology, mapping Edge Sensors to Gateway ML accelerators based on a Split-Computing architecture.
-
-```mermaid
-graph TD
-    classDef sensor fill:#e1f5fe,stroke:#03a9f4,stroke-width:2px;
-    classDef edge fill:#e8f5e9,stroke:#4caf50,stroke-width:2px;
-    classDef cloud fill:#fff3e0,stroke:#ff9800,stroke-width:2px;
-
-    subgraph Edge Devices
-        S1[Node 0-4: Sensors]:::sensor
-        E1[Node 5: Layer 1 ML]:::edge
-        E2[Node 6: Layer 2 ML]:::edge
-        E3[Node 7: Layer 3 ML]:::edge
-    end
-
-    subgraph Gateways
-        G1[Node 8: Encrypt]:::cloud
-        G2[Node 9: Prediction & Loss]:::cloud
-    end
-
-    S1 -->|Packet Tx| E1
-    E1 -->|Tensor Activations| E2
-    E2 -->|Forward Pass| E3
-    E3 -->|Quantized Data| G1
-    E3 -->|Loss Calculation| G2
-    G2 -.->|Backprop Gradients| E3
-
-```
+![Distributed Split-AI Pipeline Topology](docs/Screenshot from 2026-06-02 18-15-11.png)
 
 ---
 
